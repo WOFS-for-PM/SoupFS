@@ -1,36 +1,41 @@
 # eulerfs
 
-#### Description
+### Description
 a new NVDIMM filesystem
 
-#### Software Architecture
-Software architecture description
+### Designs
 
-#### Installation
+#### Soft Update
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### Directory Organization
 
-#### Instructions
+#### Content Oblivious Allocator
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+### Supported Features
 
-#### Contribution
+### Building and Using eulerfs
 
-1.  Fork the repository
-2.  Create Feat_xxx branch
-3.  Commit your code
-4.  Create Pull Request
+#### Requirement
+
+To build eulerfs, build the kernel with LIBNVDIMM (CONFIG_LIBNVDIMM), PMEM (CONFIG_BLK_DEV_PMEM) and DAX (CONFIG_FS_DAX)
+
+Euelrfs is developed under kernel version v5.10, other kernel version might need some adaptation.
+
+#### Building with current kernel
+
+just run make
+
+#### Building with other kernel
+
+Modify Makefile, change the $KSRC to kernel src dir, and then run make
+
+#### Using eulerfs
+
+Eulerfs runs on a pmem non-volatile memory region, if your system has pmem block devcie, you can initialize a NOVA instance with the following commands:
+
+`insmod eulerfs.ko`
+
+`mount -t eulerfs -o init /dev/pmem0 /mnt/ramdisk`
 
 
-#### Gitee Feature
-
-1.  You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
-2.  Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4.  The most valuable open source project [GVP](https://gitee.com/gvp)
-5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+The above commands create a eulerfs instance on `/dev/pmem0` and mounts it on `/mnt/ramdisk`.
