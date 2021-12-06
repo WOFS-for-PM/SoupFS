@@ -31,7 +31,7 @@ Modify Makefile, change the $KSRC to kernel src dir, and then run make
 
 #### Using eulerfs
 
-Eulerfs runs on a pmem non-volatile memory region, if your system has pmem block devcie, you can initialize a NOVA instance with the following commands:
+Eulerfs runs on a pmem non-volatile memory region, if your system has pmem block devcie, you can initialize a eulerfs instance with the following commands:
 
 `insmod eulerfs.ko`
 
