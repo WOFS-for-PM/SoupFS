@@ -71,7 +71,6 @@ static int eufs_read_pinode(struct inode *inode, struct eufs_inode *pi)
 	case S_IFREG:
 		vi->i_volatile_tree_blocks = eufs_iread_tree_blocks(pi);
 		eufs_alloc_batch_init(&vi->page_batch, 2);
-		fallthrough;
 	case S_IFLNK:
 		encoded_root = eufs_iread_root(pi);
 		vi->i_volatile_root = o2p(sb, root_ptr(encoded_root));
@@ -450,6 +449,7 @@ static int eufs_writepages(struct address_space *mapping,
 			    struct writeback_control *wbc)
 {
 	struct inode *inode = mapping->host;
+	struct super_block *sb = inode->i_sb;
 	struct dax_device *dax_dev = NULL;
 	int ret = 0;
 
@@ -458,7 +458,7 @@ static int eufs_writepages(struct address_space *mapping,
 		return -EIO;
 
 	dax_dev = EUFS_SB(inode->i_sb)->s_dax_dev;
-	ret = dax_writeback_mapping_range(mapping, dax_dev, wbc);
+	ret = dax_writeback_mapping_range(mapping, sb->s_bdev, wbc);
 
 	return ret;
 }

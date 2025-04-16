@@ -131,7 +131,7 @@ static int eufs_get_block_info(struct super_block *sb, struct eufs_sb_info *sbi)
 		return -EINVAL;
 	}
 
-	dax_dev = dax_get_by_host(sb->s_bdev->bd_disk->disk_name);
+	dax_dev = fs_dax_get_by_host(sb->s_bdev->bd_disk->disk_name);
 	if (!dax_dev) {
 		eufs_err(sb, "device does not support DAX\n");
 		return -EINVAL;

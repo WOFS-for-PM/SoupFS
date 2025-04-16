@@ -19,7 +19,7 @@
 #include <linux/iomap.h>
 #include <linux/dax.h>
 #include <linux/cpufeature.h>
-#include <linux/pgtable.h>
+#include <asm/pgtable.h>
 #include "euler.h"
 #include "dax.h"
 #include "dep.h"
@@ -1491,9 +1491,8 @@ out:
 	return ret;
 }
 
-static int eufs_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
-			    unsigned int flags, struct iomap *iomap,
-			    struct iomap *src)
+static int eufs_iomap_begin(struct inode *inode, loff_t offset,
+	loff_t length, unsigned int flags, struct iomap *iomap)
 {
 	struct super_block *sb = inode->i_sb;
 	struct eufs_sb_info *sbi = sb->s_fs_info;

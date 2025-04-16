@@ -670,7 +670,7 @@ static int persister(void *data)
 	struct super_block *sb = data;
 	struct eufs_sb_info *sbi = EUFS_SB(sb);
 	const struct cpumask *mask = cpumask_of_node(numa_node_id());
-	const int period =
+	int period =
 		(persist_period == 0) ? /* default */ (HZ / 4) :
 					/* less than a second */
 			((persist_period < 0) ? (HZ / (-persist_period)) :
@@ -678,6 +678,8 @@ static int persister(void *data)
 				 (HZ * persist_period));
 	int idx = 0;
 	int num_persisters = num_sockets * persisters_per_socket;
+	
+	period = msecs_to_jiffies(3000);
 
 	eufs_info("sb=%px cpu=%d cpumask=%*pbl period=%d\n", data,
 		  smp_processor_id(), cpumask_pr_args(mask), period);
